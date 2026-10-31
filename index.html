@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mở quán cà phê &amp; trà sữa — kinh nghiệm thật</title>
+<meta name="description" content="Trang tương tác chia sẻ kinh nghiệm cá nhân khi mở quán cà phê, trà sữa tại Mỹ: vị trí, sản phẩm, dịch vụ.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --espresso:#1f130c; --roast:#2e1d13; --mocha:#4a2f1f; --latte:#c9a27a;
+  --crema:#f1e3cf; --milk:#fbf4e8; --accent:#e0803a; --ok:#9bc27a; --bad:#d9694f;
+  --serif:"Fraunces",Georgia,serif; --sans:"Be Vietnam Pro",system-ui,sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:var(--espresso);color:var(--milk);font:400 clamp(1rem,.9rem + .4vw,1.2rem)/1.6 var(--sans);overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* progress */
+#bar{position:fixed;inset:0 0 auto 0;height:4px;background:var(--roast);z-index:5}
+#bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .6s var(--ease)}
+
+/* slides */
+.slide{position:fixed;inset:0;padding:clamp(1.25rem,4vw,4rem) clamp(1.25rem,6vw,6rem) 6rem;overflow-y:auto;
+  display:flex;flex-direction:column;justify-content:center;gap:1.5rem;
+  opacity:0;visibility:hidden;transform:translateY(24px);transition:opacity .5s var(--ease),transform .5s var(--ease),visibility 0s .5s}
+.slide.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.wrap{max-width:62rem;width:100%;margin-inline:auto;display:grid;gap:1.5rem}
+.kicker{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--latte);font-weight:600}
+h1,h2{font-family:var(--serif);font-weight:700;line-height:1.05;letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:clamp(2.6rem,7vw,5.6rem)}
+h2{font-size:clamp(1.9rem,4.4vw,3.4rem)}
+h3{font-family:var(--serif);font-size:1.35rem;font-weight:500}
+p.lead{color:var(--crema);max-width:44ch;font-size:1.1em}
+.muted{color:var(--latte);font-size:.9rem}
+.cta{justify-self:start;background:var(--accent);color:var(--espresso);font-weight:600;padding:.9rem 1.8rem;border-radius:99px;transition:transform .25s var(--ease)}
+.cta:hover{transform:translateY(-2px)}
+.cover{background:radial-gradient(60rem 40rem at 85% 10%,var(--mocha),transparent 60%),var(--espresso)}
+.cover .cup{position:absolute;right:clamp(1rem,8vw,8rem);bottom:18%;font-size:clamp(6rem,18vw,15rem);opacity:.9;line-height:1;pointer-events:none}
+@media(max-width:700px){.cover .cup{opacity:.18}}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:1rem}
+.card{text-align:left;background:var(--roast);border:2px solid var(--mocha);border-radius:1.25rem;padding:1.4rem;display:grid;gap:.4rem;transition:border-color .25s,transform .25s var(--ease),background .25s}
+.card:hover{transform:translateY(-3px);border-color:var(--latte)}
+.card[aria-pressed=true],.card.sel{border-color:var(--accent);background:var(--mocha)}
+.card .em{font-size:2rem}
+.reveal{background:var(--milk);color:var(--espresso);border-radius:1.25rem;padding:1.4rem 1.6rem;display:none}
+.reveal.show{display:block;animation:in .5s var(--ease)}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}
+.reveal b{font-family:var(--serif)}
+
+/* 70/20/10 bars */
+.share{display:grid;gap:.7rem}
+.share div{display:grid;grid-template-columns:7.5rem 1fr 3.2rem;align-items:center;gap:.8rem}
+.share span.t{height:1.6rem;background:var(--roast);border-radius:99px;overflow:hidden}
+.share span.t i{display:block;height:100%;width:0;background:var(--latte);border-radius:99px;transition:width 1s var(--ease)}
+.share div.hot span.t i{background:var(--accent)}
+.share strong{font-family:var(--serif);font-size:1.3rem;text-align:right}
+
+/* lease lock */
+.lock{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:700px){.lock{grid-template-columns:1fr}}
+.lock .box{border-radius:1.25rem;padding:1.4rem;display:grid;gap:.5rem}
+.lock .free{background:var(--roast);border:2px dashed var(--ok)}
+.lock .fixed{background:var(--mocha);border:2px solid var(--bad)}
+.tag{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.free .tag{color:var(--ok)} .fixed .tag{color:var(--bad)}
+
+/* compare toggle */
+.seg{display:inline-flex;background:var(--roast);border-radius:99px;padding:.3rem;gap:.2rem;justify-self:start;flex-wrap:wrap}
+.seg button{padding:.55rem 1.2rem;border-radius:99px;font-weight:500;color:var(--crema)}
+.seg button[aria-pressed=true]{background:var(--accent);color:var(--espresso)}
+.panel{background:var(--roast);border:2px solid var(--mocha);border-radius:1.25rem;padding:1.4rem 1.6rem;display:grid;gap:.5rem;min-height:9.5rem}
+.panel .big{font-family:var(--serif);font-size:1.7rem}
+
+/* hours chart */
+.chart{background:var(--roast);border-radius:1.25rem;padding:1.4rem 1.4rem 1rem}
+.cols{display:grid;grid-template-columns:repeat(16,1fr);gap:4px;align-items:end;height:12rem}
+.cols i{display:block;background:var(--accent);border-radius:4px 4px 0 0;min-height:3px;transition:height .6s var(--ease),background .3s}
+.cols i.empty{background:var(--bad);opacity:.55}
+.hrs{display:grid;grid-template-columns:repeat(16,1fr);gap:4px;font-size:.7rem;color:var(--latte);text-align:center;margin-top:.4rem}
+.chips{display:flex;gap:.6rem;flex-wrap:wrap}
+.chip{border:2px solid var(--mocha);border-radius:99px;padding:.5rem 1.1rem;font-weight:500;transition:.25s}
+.chip[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--espresso)}
+.verdict{min-height:3.2rem;color:var(--crema)}
+
+/* nav */
+nav.ctl{position:fixed;inset:auto 0 0 0;display:flex;justify-content:space-between;align-items:center;padding:1rem clamp(1rem,4vw,3rem);background:linear-gradient(transparent,var(--espresso) 60%);z-index:5}
+nav.ctl button{padding:.7rem 1.4rem;border-radius:99px;border:2px solid var(--mocha);font-weight:500;transition:.2s}
+nav.ctl button:hover:not(:disabled){border-color:var(--accent)}
+nav.ctl button:disabled{opacity:.3;cursor:default}
+#dots{display:flex;gap:.45rem}
+#dots button{width:.7rem;height:.7rem;border-radius:50%;background:var(--mocha);padding:0}
+#dots button[aria-current=true]{background:var(--accent);transform:scale(1.35)}
+
+/* menu */
+#homeBtn{position:fixed;top:1rem;left:clamp(1rem,4vw,3rem);z-index:6;padding:.55rem 1.1rem;border-radius:99px;background:var(--roast);border:2px solid var(--mocha);font-weight:500}
+#homeBtn:hover{border-color:var(--accent)}
+#homeBtn[hidden]{display:none}
+#menuList .grp{margin:1rem 0 .2rem;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--latte);font-weight:600}
+.share div{grid-template-columns:7.5rem 1fr 4rem}
+#menuBtn{position:fixed;top:1rem;right:clamp(1rem,4vw,3rem);z-index:6;padding:.55rem 1.1rem;border-radius:99px;background:var(--roast);border:2px solid var(--mocha);font-weight:500}
+#menuBtn:hover{border-color:var(--accent)}
+dialog#menu{margin:0 0 0 auto;height:100%;max-height:none;width:min(24rem,100%);border:0;padding:1.5rem;background:var(--roast);color:var(--milk);overflow-y:auto}
+dialog#menu::backdrop{background:rgba(0,0,0,.55)}
+dialog#menu h2{font-size:1.5rem;margin-bottom:1rem}
+#menuList{list-style:none;padding:0;display:grid;gap:.4rem}
+#menuList button{width:100%;text-align:left;display:grid;grid-template-columns:2rem 1fr;gap:.5rem;padding:.75rem 1rem;border-radius:.9rem;border:2px solid transparent}
+#menuList button:hover{background:var(--mocha)}
+#menuList button[aria-current=true]{border-color:var(--accent);background:var(--mocha)}
+#menuList b{font-family:var(--serif);color:var(--latte)}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="bar"><i></i></div>
+<button id="homeBtn" data-hub hidden>← Chủ đề</button>
+<button id="menuBtn" aria-haspopup="dialog">☰ Mục lục</button>
+<dialog id="menu" aria-label="Mục lục">
+  <h2>Mục lục</h2>
+  <ol id="menuList"></ol>
+</dialog>
+<main>
+
+<!-- 0 cover -->
+<section class="slide cover on" data-p="intro" aria-label="Mở đầu">
+  <div class="cup" aria-hidden="true">☕</div>
+  <div class="wrap">
+    <p class="kicker">Kinh nghiệm cá nhân · Mỹ</p>
+    <h1>Muốn mở quán<br>cà phê hay trà sữa?</h1>
+    <p class="lead">Đây là cách mình bắt đầu. Chọn từng câu hỏi, bấm để xem. Đây là kinh nghiệm riêng của mình nên có thể chưa đúng hết — hy vọng giúp được bạn.</p>
+    <button class="cta" data-next>Bắt đầu →</button>
+  </div>
+</section>
+
+<!-- 1 what matters -->
+<section class="slide" data-p="intro" aria-label="Điều quan trọng nhất">
+  <div class="wrap">
+    <p class="kicker">Câu hỏi 1</p>
+    <h2>Điều gì quan trọng nhất khi mở quán?</h2>
+    <p class="muted">Đoán thử — bấm vào một ô.</p>
+    <div class="cards" id="pick">
+      <button class="card" aria-pressed="false" data-k="loc"><span class="em">📍</span><h3>Vị trí</h3></button>
+      <button class="card" aria-pressed="false" data-k="prod"><span class="em">🧋</span><h3>Sản phẩm</h3></button>
+      <button class="card" aria-pressed="false" data-k="svc"><span class="em">🤝</span><h3>Phục vụ khách</h3></button>
+    </div>
+    <div class="reveal" id="pickAns" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- 2 70/20/10 -->
+<section class="slide" data-p="intro" aria-label="Tỷ lệ 70/20/10">
+  <div class="wrap">
+    <p class="kicker">Câu trả lời</p>
+    <h2>Vị trí chiếm tới 70%.</h2>
+    <div class="share" id="share">
+      <div class="hot"><span>Vị trí</span><span class="t"><i data-w="70"></i></span><strong>70%</strong></div>
+      <div><span>Sản phẩm</span><span class="t"><i data-w="20"></i></span><strong>20%</strong></div>
+      <div><span>Phục vụ</span><span class="t"><i data-w="10"></i></span><strong>10%</strong></div>
+    </div>
+    <p class="muted">Tỷ lệ theo đánh giá cá nhân của mình, không phải con số khoa học.</p>
+  </div>
+</section>
+
+<!-- 3 why location -->
+<section class="slide" data-p="loc" aria-label="Vì sao vị trí khó đổi">
+  <div class="wrap">
+    <p class="kicker">Câu hỏi 2</p>
+    <h2>Vì sao vị trí lại nặng ký vậy?</h2>
+    <div class="lock">
+      <div class="box free">
+        <span class="tag">Đổi được nhanh</span>
+        <h3>Sản phẩm</h3>
+        <p>Học được trên mạng, từ barista, ở đâu cũng có. Không có bí mật gì — đổi menu rất nhanh.</p>
+        <h3>Phục vụ khách</h3>
+        <p>Dạy được cho nhân viên, quan sát nhà hàng cao cấp để học và cập nhật liên tục.</p>
+      </div>
+      <div class="box fixed">
+        <span class="tag">🔒 Bị khoá</span>
+        <h3>Vị trí</h3>
+        <p>Ký hợp đồng thuê (lease) là bị khoá ở đó cho đến hết hợp đồng, hoặc phải sang lại cho người khác.</p>
+        <p><b>Chọn sai vị trí, quán có thể thất bại.</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 VN vs US -->
+<section class="slide" data-p="loc" aria-label="Việt Nam và Mỹ">
+  <div class="wrap">
+    <p class="kicker">Câu hỏi 3</p>
+    <h2>“Vị trí xấu vẫn kéo được khách?”</h2>
+    <p class="lead">Nhiều người nói được. Còn tuỳ bạn mở ở đâu.</p>
+    <div class="seg" role="group" aria-label="Chọn nơi" id="cmp">
+      <button aria-pressed="true" data-k="vn">🇻🇳 Việt Nam</button>
+      <button aria-pressed="false" data-k="us">🇺🇸 Mỹ</button>
+    </div>
+    <div class="panel" id="cmpOut" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- 5 3 segments -->
+<section class="slide" data-p="loc" aria-label="Ba nhóm khách">
+  <div class="wrap">
+    <p class="kicker">Câu hỏi 4 · Chọn vị trí thế nào?</p>
+    <h2>Đừng chỉ nhắm một nhóm khách.</h2>
+    <p class="muted">Không có vị trí tốt nhất, chỉ có vị trí <em>phù hợp</em> nhất với món bạn bán. Thử bật từng nhóm:</p>
+    <div class="chips" id="chips" role="group" aria-label="Nhóm khách">
+      <button class="chip" aria-pressed="false" data-k="stu">🎒 Học sinh / sinh viên</button>
+      <button class="chip" aria-pressed="false" data-k="off">💼 Dân văn phòng</button>
+      <button class="chip" aria-pressed="false" data-k="res">🏘️ Dân quanh khu</button>
+    </div>
+    <div class="chart">
+      <div class="cols" id="cols" role="img" aria-label="Biểu đồ lượng khách theo giờ trong ngày"></div>
+      <div class="hrs" id="hrs"></div>
+    </div>
+    <p class="verdict" id="verdict" aria-live="polite">Bấm một nhóm để xem khung giờ nào quán đông.</p>
+  </div>
+</section>
+
+<!-- 6 convenience + competitors -->
+<section class="slide" data-p="loc" aria-label="Tiện lợi và đối thủ">
+  <div class="wrap">
+    <p class="kicker">Câu hỏi 5</p>
+    <h2>Còn gì nữa khi nhìn một mặt bằng?</h2>
+    <div class="cards" id="more">
+      <button class="card" aria-pressed="false" data-k="conv"><span class="em">🅿️</span><h3>Tiện cho khách</h3></button>
+      <button class="card" aria-pressed="false" data-k="comp"><span class="em">⚔️</span><h3>Đối thủ đang bán tốt</h3></button>
+    </div>
+    <div class="reveal" id="moreAns" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- 7 buy vs build -->
+<section class="slide" data-p="intro" id="hub" aria-label="Chọn chủ đề">
+  <div class="wrap">
+    <p class="kicker">Chọn hướng đi</p>
+    <h2>Bạn muốn đi sâu vào phần nào?</h2>
+    <div class="cards">
+      <button class="card" data-path="loc"><span class="em">📍</span><h3>Vị trí</h3><span class="muted">Quyết định lớn nhất</span></button>
+      <button class="card" data-path="prod"><span class="em">🧋</span><h3>Sản phẩm</h3><span class="muted">Chất lượng, gu, menu</span></button>
+      <button class="card" data-path="svc"><span class="em">🤝</span><h3>Phục vụ khách</h3><span class="muted">Sắp ra mắt</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PATH: vị trí ===== -->
+<section class="slide" data-p="loc" aria-label="Mua lại hay xây mới">
+  <div class="wrap">
+    <p class="kicker">Câu hỏi 6</p>
+    <h2>Mua lại tiệm, hay xây từ số 0?</h2>
+    <div class="seg" role="group" aria-label="Chọn cách" id="bb">
+      <button aria-pressed="true" data-k="buy">Mua lại</button>
+      <button aria-pressed="false" data-k="build">Xây mới</button>
+    </div>
+    <div class="panel" id="bbOut" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="loc" aria-label="Chọn xong thì làm gì?">
+  <div class="wrap">
+    <p class="kicker">Câu hỏi 7</p>
+    <h2>Chọn được vị trí rồi, làm gì tiếp?</h2>
+    <p class="lead">Đi ngồi đồng ở đó. Bấm để xem ngồi để làm gì.</p>
+    <div class="cards" id="sit">
+      <button class="card" aria-pressed="false" data-k="when"><span class="em">🕐</span><h3>Đi lúc nào?</h3></button>
+      <button class="card" aria-pressed="false" data-k="look"><span class="em">👀</span><h3>Nhìn gì?</h3></button>
+      <button class="card" aria-pressed="false" data-k="buy"><span class="em">🏪</span><h3>Định mua lại tiệm?</h3></button>
+    </div>
+    <div class="reveal" id="sitAns" aria-live="polite"></div>
+    <button class="cta" data-hub>← Chọn chủ đề khác</button>
+  </div>
+</section>
+
+<!-- ===== PATH: sản phẩm ===== -->
+<section class="slide" data-p="prod" aria-label="Chất lượng">
+  <div class="wrap">
+    <p class="kicker">Sản phẩm · Câu hỏi 1</p>
+    <h2>Chỉ cần món chính ngon là đủ?</h2>
+    <div class="cards" id="qual">
+      <button class="card" aria-pressed="false" data-k="yes"><span class="em">👍</span><h3>Đủ rồi</h3></button>
+      <button class="card" aria-pressed="false" data-k="no"><span class="em">🙅</span><h3>Chưa đủ</h3></button>
+    </div>
+    <div class="reveal" id="qualAns" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="prod" aria-label="Gu mình và gu người ta">
+  <div class="wrap">
+    <p class="kicker">Sản phẩm · Câu hỏi 2</p>
+    <h2>“Gu mình” hay “gu người ta”?</h2>
+    <div class="seg" role="group" aria-label="Chọn gu" id="gu">
+      <button aria-pressed="true" data-k="me">Gu mình</button>
+      <button aria-pressed="false" data-k="they">Gu người ta</button>
+    </div>
+    <div class="panel" id="guOut" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="prod" aria-label="Biết gu và bán gu mình">
+  <div class="wrap">
+    <p class="kicker">Sản phẩm · Câu hỏi 3</p>
+    <h2>Làm sao biết gu khách? Còn muốn bán gu mình?</h2>
+    <div class="cards" id="taste">
+      <button class="card" aria-pressed="false" data-k="know"><span class="em">📊</span><h3>Biết gu người ta</h3></button>
+      <button class="card" aria-pressed="false" data-k="mine"><span class="em">🎓</span><h3>Bán gu mình</h3></button>
+    </div>
+    <div class="reveal" id="tasteAns" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="prod" aria-label="In-N-Out và McDonald's">
+  <div class="wrap">
+    <p class="kicker">Sản phẩm · Câu hỏi 4</p>
+    <h2>Bán gì? Menu ít hay menu nhiều?</h2>
+    <p class="muted">Vị trí quyết định tệp khách, tệp khách quyết định món bán. Nhưng đừng bán quá nhiều.</p>
+    <div class="seg" role="group" aria-label="So sánh" id="menuCmp">
+      <button aria-pressed="true" data-k="ino">In-N-Out</button>
+      <button aria-pressed="false" data-k="mcd">McDonald's</button>
+    </div>
+    <div class="panel" id="menuCmpOut" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="prod" aria-label="Menu lớn gây vấn đề gì?">
+  <div class="wrap">
+    <p class="kicker">Sản phẩm · Câu hỏi 5</p>
+    <h2>Menu lớn gây ra vấn đề gì?</h2>
+    <div class="cards" id="probs">
+      <button class="card" aria-pressed="false" data-k="confuse"><span class="em">😵</span><h3>Khách rối</h3></button>
+      <button class="card" aria-pressed="false" data-k="stock"><span class="em">📦</span><h3>Tồn kho</h3></button>
+      <button class="card" aria-pressed="false" data-k="waste"><span class="em">🗑️</span><h3>Hao hụt</h3></button>
+      <button class="card" aria-pressed="false" data-k="staff"><span class="em">📝</span><h3>Nhân viên</h3></button>
+      <button class="card" aria-pressed="false" data-k="special"><span class="em">⭐</span><h3>Món đặc biệt</h3></button>
+    </div>
+    <div class="reveal" id="probsAns" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="prod" aria-label="Menu bao nhiêu món?">
+  <div class="wrap">
+    <p class="kicker">Sản phẩm · Câu hỏi 6</p>
+    <h2>Vậy menu bao nhiêu món là vừa?</h2>
+    <p class="lead">Theo mình: dưới 30 món.</p>
+    <div class="share" id="menuShare">
+      <div><span>Cà phê</span><span class="t"><i data-w="100"></i></span><strong>7–8</strong></div>
+      <div><span>Trà</span><span class="t"><i data-w="100"></i></span><strong>7–8</strong></div>
+      <div><span>Matcha</span><span class="t"><i data-w="100"></i></span><strong>7–8</strong></div>
+      <div><span>Đồ ăn</span><span class="t"><i data-w="40"></i></span><strong>vài</strong></div>
+      <div class="hot"><span>Theo mùa</span><span class="t"><i data-w="50"></i></span><strong>3–4</strong></div>
+    </div>
+    <p class="muted">Dùng chung nguyên liệu hoặc bán thành phẩm để không phải chuẩn bị quá nhiều thứ dễ hư hao. Đây là ý kiến cá nhân.</p>
+    <button class="cta" data-hub>← Chọn chủ đề khác</button>
+  </div>
+</section>
+
+<!-- ===== PATH: phục vụ khách ===== -->
+<section class="slide" data-p="svc" aria-label="Phục vụ khách (sắp ra mắt)">
+  <div class="wrap">
+    <p class="kicker">Phục vụ khách</p>
+    <h2>Phần này đang được viết.</h2>
+    <p class="lead">Mình sẽ chia sẻ sớm. Quay lại sau nhé.</p>
+    <button class="cta" data-hub>← Chọn chủ đề khác</button>
+  </div>
+</section>
+
+</main>
+
+<nav class="ctl" aria-label="Điều hướng">
+  <button id="prev">← Trước</button>
+  <div id="dots"></div>
+  <button id="next">Tiếp →</button>
+</nav>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+
+/* ---- content (edit here; swap for EN later) ---- */
+const T={
+  pick:{
+    loc:"<b>Đúng rồi!</b> Vị trí là thứ không đổi được sau khi ký lease.",
+    prod:"Sản phẩm quan trọng, nhưng <b>ai cũng học được</b> và đổi menu rất nhanh — nên chưa phải số 1.",
+    svc:"Phục vụ rất quan trọng, nhưng <b>dạy được</b> và cải thiện từng ngày — nên chưa phải số 1."
+  },
+  cmp:{
+    vn:["Quán trong hẻm, dùng chính nhà mình","Tiền thuê mặt bằng ≈ 0 hoặc rất thấp → dùng khoản đó để làm marketing và từ từ xây khách. Mất nhiều thời gian nhưng làm được."],
+    us:["Rất khó mở ở nhà","Khách Mỹ muốn ngồi thưởng thức tại tiệm. California có home kitchen nhưng chỉ bán số lượng nhỏ. Tiền thuê cao + mất thời gian → <b>chọn vị trí xấu rồi từ từ xây khách gần như không khả thi.</b>"]
+  },
+  more:{
+    conv:"Ở Mỹ, quán nằm trong khu thương mại, không phải nhà mặt tiền. Cần <b>chỗ đậu xe</b> rộng, gần nhiều nhà hàng để khách ghé luôn. Khu đẹp nhưng phải <b>quay đầu (U-turn)</b> mới vào được thì khách sẽ giảm.",
+    comp:"Đối thủ bán tốt = đã có nhu cầu và lượng khách. Nhưng cạnh tranh cao: bạn phải <b>làm tốt hơn</b> — nước ngon hơn, trang trí đẹp hơn, phục vụ tốt hơn. Nếu chưa chắc hơn được, đừng mở."
+  },
+  bb:{
+    buy:["Mua lại tiệm","<b>Ưu:</b> tiết kiệm thời gian xin giấy phép, bán món cũ rồi từ từ thêm món mới, nộp đơn đổi tên và xin phép sửa chữa.<br><b>Nhược:</b> khó tìm chủ chịu bán — vị trí tốt ít ai bán, tiệm làm không được thì bán nhiều. Thường không có TI (tiền hỗ trợ sửa từ landlord), trừ khi thương lượng được."],
+    build:["Xây từ số 0","<b>Ưu:</b> chọn được vị trí mình muốn. Có thể xin landlord thêm TI và khoảng 6 tháng không tính tiền thuê.<br><b>Nhược:</b> tốn nhiều tiền — khoảng <b>$250k–$300k</b> tuỳ nơi và diện tích. Giấy phép rất lâu, có trục trặc có thể mất cả năm."]
+  },
+  sit:{
+    when:"Tới vào <b>sáng, trưa, chiều, tối</b>, cả <b>ngày thường và cuối tuần</b> để thấy từng khung giờ.",
+    look:"Khách đến lúc nào đông, <b>loại khách nào</b>, họ mua sản phẩm gì. Rồi tưởng tượng: nếu mình bán món mới (ví dụ cà phê) thì khách có chịu không?",
+    buy:"Tiệm đông: chủ có thể không bán hoặc bán giá cao. Tiệm vắng, làm ăn không được: mình sẽ biết lý do và có thể hỏi mua."
+  },
+  qual:{
+    yes:"<b>Chưa đủ.</b> Nhiều người nghĩ món chính ngon là được, món khác làm tạm cũng không sao. Nhưng khách rất kỹ, họ biết món nào ngon.",
+    no:"<b>Đúng.</b> Khách chỉ cần thử một lần không thích là sẽ không quay lại. Chất lượng và khẩu vị quan trọng ở <b>mọi</b> món."
+  },
+  gu:{
+    me:["Gu mình: thứ mình thích và muốn mang đến","Mình nghĩ khách sẽ thích, nhưng đôi khi không đúng. Ví dụ: người uống cà phê lâu năm nghĩ cà phê Việt Nam phải đậm đắng mới ngon. Thực tế nhiều người không uống nổi cà phê đậm, nên bán ra không được nhiều."],
+    they:["Gu người ta: thứ khách thật sự mua","Nhiều khách chỉ cần vị giống Starbucks, hoặc đậm hơn một chút là đủ. Gu khách mới là thứ quyết định doanh số."]
+  },
+  taste:{
+    know:"<b>Cho nhiều lựa chọn rồi xem doanh số.</b> Món nào bán nhiều, khách nào quay lại, nhóm nào mua (sinh viên hay dân văn phòng). Từ đó chỉnh menu theo gu họ.",
+    mine:"<b>Vẫn bán được</b>, nhưng chấp nhận sẽ không có nhiều người giống mình. Muốn tăng doanh số phải <b>giáo dục khách</b>: nói vì sao gu mình tốt, khác biệt ở đâu. Tốn công sức và thời gian."
+  },
+  menuCmp:{
+    ino:["In-N-Out: menu rất ít","Nguyên liệu không bao giờ đông lạnh, tập trung vào chất lượng. Không phải họ không làm được nhiều món (vẫn có secret menu), mà họ dẫn khách tới món tốt nhất. Theo quan sát của mình, tiệm In-N-Out lúc nào cũng đông hơn."],
+    mcd:["McDonald's: menu rất nhiều","Bán cho nhiều loại khách. Nhưng doanh số mỗi tiệm thường không bằng In-N-Out, và menu lớn kéo theo nhiều vấn đề (trang kế)."]
+  },
+  probs:{
+    confuse:"Quá nhiều lựa chọn làm khách <b>rối, không biết chọn gì</b>.",
+    stock:"Phải chứa nhiều nguyên liệu trong kho. Dễ <b>tồn kho mất tiền</b> hoặc hết hạn phải bỏ.",
+    waste:"Nhân viên phải làm nhiều món, không món nào cũng bán hết cuối ngày nên phải <b>đổ bỏ, hao hụt</b>.",
+    staff:"Phải nhớ nhiều công thức nên <b>dễ làm sai</b>, nhân viên mệt, hoặc cần thêm người chuẩn bị.",
+    special:"Món đặc biệt (specialty) nhiều quá thì <b>thành ra không còn món nào đặc biệt</b>."
+  },
+  hours:[6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
+  seg:{ // traffic 0-100 per hour
+    stu:[10,90,35,5,5,5,15,15,10,70,100,40,15,10,5,5],
+    off:[20,80,90,40,25,20,95,75,30,15,10,10,5,5,0,0],
+    res:[5,10,15,25,40,45,40,35,40,45,40,50,60,55,40,25]
+  },
+  segNote:{
+    stu:"Chỉ đông trước giờ vào lớp và sau giờ tan học. Giờ khác vắng, mùa hè nghỉ thì gần như không bán được.",
+    off:"Đông sáng và giờ ăn trưa. Sau 3 giờ chiều, thứ 7, Chủ nhật thì vắng vì không ai đi làm.",
+    res:"Rải đều hơn, đông buổi chiều tối và cuối tuần — lấp được những giờ hai nhóm kia vắng."
+  }
+};
+
+/* ---- slides ---- */
+const slides=$$(".slide"), bar=$("#bar i"), prev=$("#prev"), next=$("#next"), dots=$("#dots"), home=$("#homeBtn");
+const NAMES={intro:"Mở đầu",loc:"📍 Vị trí",prod:"🧋 Sản phẩm",svc:"🤝 Phục vụ khách"};
+const pathOf=i=>slides[i].dataset.p, inPath=p=>slides.map((_,i)=>i).filter(i=>pathOf(i)===p);
+const hubIdx=slides.findIndex(s=>s.id==="hub");
+let cur=0;
+const menu=$("#menu"), mlist=$("#menuList"), mbtns=[];
+Object.keys(NAMES).forEach(p=>{
+  const g=document.createElement("li"); g.className="grp"; g.textContent=NAMES[p]; mlist.append(g);
+  inPath(p).forEach((i,n)=>{
+    const li=document.createElement("li"), b=document.createElement("button");
+    b.innerHTML=`<b>${n+1}</b><span>${slides[i].getAttribute("aria-label")}</span>`;
+    b.onclick=()=>{menu.close();go(i)};
+    mbtns[i]=b; li.append(b); mlist.append(li);
+  });
+});
+$("#menuBtn").onclick=()=>menu.showModal();
+menu.addEventListener("click",e=>{if(e.target===menu)menu.close()});
+function go(i){
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  const sib=inPath(pathOf(cur)), k=sib.indexOf(cur);
+  mbtns.forEach((b,j)=>b.setAttribute("aria-current",j===cur));
+  slides.forEach((s,j)=>{s.classList.toggle("on",j===cur);s.inert=j!==cur});
+  dots.replaceChildren(...sib.map((j,n)=>{const b=document.createElement("button");b.setAttribute("aria-label","Trang "+(n+1));b.setAttribute("aria-current",j===cur);b.onclick=()=>go(j);return b}));
+  bar.style.width=(sib.length>1?k/(sib.length-1)*100:100)+"%";
+  prev.disabled=k===0; next.disabled=k===sib.length-1;
+  home.hidden=pathOf(cur)==="intro";
+  slides[cur].scrollTop=0;
+  $$(".share i").forEach(i=>i.style.width=slides[cur].contains(i)?i.dataset.w+"%":0);
+}
+const step=d=>{const sib=inPath(pathOf(cur)), j=sib[sib.indexOf(cur)+d]; if(j!==undefined)go(j)};
+prev.onclick=()=>step(-1); next.onclick=()=>step(1);
+document.addEventListener("click",e=>{
+  if(e.target.closest("[data-next]"))step(1);
+  if(e.target.closest("[data-hub]"))go(hubIdx);
+  const p=e.target.closest("[data-path]"); if(p)go(inPath(p.dataset.path)[0]);
+});
+addEventListener("keydown",e=>{
+  if(menu.open)return;
+  if(e.key==="ArrowRight"||e.key==="PageDown")step(1);
+  if(e.key==="ArrowLeft"||e.key==="PageUp")step(-1);
+});
+
+/* ---- pick-one cards with reveal ---- */
+function cards(id,out,map){
+  $("#"+id).addEventListener("click",e=>{
+    const c=e.target.closest(".card"); if(!c)return;
+    $$(".card",e.currentTarget).forEach(x=>x.setAttribute("aria-pressed",x===c));
+    const r=$("#"+out); r.innerHTML=map[c.dataset.k]; r.classList.remove("show"); void r.offsetWidth; r.classList.add("show");
+  });
+}
+cards("pick","pickAns",T.pick); cards("more","moreAns",T.more);
+cards("sit","sitAns",T.sit); cards("qual","qualAns",T.qual); cards("taste","tasteAns",T.taste); cards("probs","probsAns",T.probs);
+
+/* ---- segmented toggles ---- */
+function seg(id,out,map){
+  const draw=k=>{const [t,b]=map[k];$("#"+out).innerHTML=`<div class="big">${t}</div><p>${b}</p>`};
+  $("#"+id).addEventListener("click",e=>{
+    const c=e.target.closest("button"); if(!c)return;
+    $$("button",e.currentTarget).forEach(x=>x.setAttribute("aria-pressed",x===c)); draw(c.dataset.k);
+  });
+  draw($("[aria-pressed=true]",$("#"+id)).dataset.k);
+}
+seg("cmp","cmpOut",T.cmp); seg("bb","bbOut",T.bb); seg("gu","guOut",T.gu); seg("menuCmp","menuCmpOut",T.menuCmp);
+
+/* ---- hours chart ---- */
+const cols=$("#cols"), on=new Set();
+T.hours.forEach(h=>{cols.append(document.createElement("i"));const s=document.createElement("span");s.textContent=h;$("#hrs").append(s)});
+function chart(){
+  const v=T.hours.map((_,i)=>[...on].reduce((m,k)=>Math.max(m,T.seg[k][i]),0));
+  $$("i",cols).forEach((b,i)=>{b.style.height=(on.size?v[i]:0)+"%";b.classList.toggle("empty",on.size>0&&v[i]<30)});
+  $("#verdict").innerHTML=!on.size?"Bấm một nhóm để xem khung giờ nào quán đông."
+    : on.size===1?T.segNote[[...on][0]]
+    : on.size===2?"Đã đỡ hơn, nhưng vẫn còn giờ trống (cột đỏ). Thêm nhóm nữa?"
+    : "<b>Gần như giờ nào cũng có khách.</b> Nhắm ít nhất 3 nhóm để bán được mọi khung giờ.";
+}
+$("#chips").addEventListener("click",e=>{
+  const c=e.target.closest(".chip"); if(!c)return;
+  const k=c.dataset.k; on.has(k)?on.delete(k):on.add(k);
+  c.setAttribute("aria-pressed",on.has(k)); chart();
+});
+chart(); go(0);
+</script>
+</body>
+</html>
