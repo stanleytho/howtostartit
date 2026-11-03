@@ -115,13 +115,41 @@ dialog#menu h2{font-size:1.5rem;margin-bottom:1rem}
 #menuList button:hover{background:var(--mocha)}
 #menuList button[aria-current=true]{border-color:var(--accent);background:var(--mocha)}
 #menuList b{font-family:var(--serif);color:var(--latte)}
+/* checklist */
+#checkBtn{position:fixed;top:1rem;right:calc(clamp(1rem,4vw,3rem) + 7.8rem);z-index:6;padding:.55rem 1.1rem;border-radius:99px;background:var(--roast);border:2px solid var(--mocha);font-weight:500}
+#checkBtn:hover{border-color:var(--accent)}
+dialog#check{margin:auto;width:min(46rem,100%);max-height:100%;border:0;border-radius:1.25rem;padding:1.5rem 2rem;background:var(--milk);color:var(--espresso);overflow-y:auto}
+dialog#check::backdrop{background:rgba(0,0,0,.6)}
+#check h2{font-size:1.8rem;margin-bottom:.2rem}
+#check .sub{color:var(--mocha);font-size:.9rem;margin-bottom:1rem}
+#check h3{margin:1.2rem 0 .4rem;border-bottom:2px solid var(--latte);padding-bottom:.2rem}
+#check label{display:flex;gap:.7rem;align-items:flex-start;padding:.3rem 0;cursor:pointer;font-size:.95rem;line-height:1.45}
+#check input{width:1.15rem;height:1.15rem;margin-top:.2rem;accent-color:var(--accent);flex:none}
+#check .acts{display:flex;gap:.6rem;margin-top:1.2rem;justify-content:flex-end}
+#check .acts button{padding:.6rem 1.3rem;border-radius:99px;border:2px solid var(--mocha);font-weight:600}
+#check .acts .pr{background:var(--accent);border-color:var(--accent)}
+@media print{
+  html,body{height:auto;overflow:visible;background:#fff}
+  body>*:not(#check){display:none!important}
+  dialog#check{display:block;position:static;width:100%;max-height:none;padding:0;background:#fff;overflow:visible}
+  #check .acts{display:none}
+  #check h3{break-after:avoid} #check label{break-inside:avoid}
+  #check input{accent-color:#000}
+}
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 </style>
 </head>
 <body>
 <div id="bar"><i></i></div>
 <button id="homeBtn" data-hub hidden>← Chủ đề</button>
+<button id="checkBtn" aria-haspopup="dialog">✅ Checklist</button>
 <button id="menuBtn" aria-haspopup="dialog">☰ Mục lục</button>
+<dialog id="check" aria-label="Checklist">
+  <h2>Checklist mở quán</h2>
+  <p class="sub">Kinh nghiệm cá nhân, dùng để tham khảo. Tích vào từng mục, hoặc in ra giấy.</p>
+  <div id="checkBody"></div>
+  <div class="acts"><button onclick="document.getElementById('check').close()">Đóng</button><button class="pr" onclick="window.print()">🖨️ In</button></div>
+</dialog>
 <dialog id="menu" aria-label="Mục lục">
   <h2>Mục lục</h2>
   <ol id="menuList"></ol>
@@ -727,7 +755,7 @@ document.addEventListener("click",e=>{
   const p=e.target.closest("[data-path]"); if(p)go(inPath(p.dataset.path)[0]);
 });
 addEventListener("keydown",e=>{
-  if(menu.open)return;
+  if(menu.open||$("#check").open)return;
   if(e.key==="ArrowRight"||e.key==="PageDown")step(1);
   if(e.key==="ArrowLeft"||e.key==="PageUp")step(-1);
 });
@@ -770,6 +798,55 @@ $("#chips").addEventListener("click",e=>{
   const k=c.dataset.k; on.has(k)?on.delete(k):on.add(k);
   c.setAttribute("aria-pressed",on.has(k)); chart();
 });
+/* ---- checklist ---- */
+const CHECK={
+  "📍 Vị trí":[
+    "Chọn vị trí hợp với món mình bán",
+    "Nhắm ít nhất 3 nhóm khách để bán được nhiều khung giờ",
+    "Kiểm tra chỗ đậu xe, có phải U-turn không, có nhiều quán ăn gần đó không",
+    "Xem đối thủ đang bán tốt: chắc chắn mình làm tốt hơn mới mở",
+    "Quyết định mua lại hay xây mới",
+    "Ngồi quan sát: sáng, trưa, chiều, tối, ngày thường và cuối tuần",
+    "Mua lại: xem khách nào, mua gì. Xây mới: quan sát các quán gần đó",
+    "Liên hệ chủ tiệm hoặc agent quản lý building",
+    "Có business plan chi tiết, thiết kế tiệm và menu",
+    "Tìm người hoặc công ty tư vấn nếu chưa có kinh nghiệm",
+    "Chuẩn bị đủ tiền: mua lại, sửa tiệm, trả thuê 6 tháng",
+    "Chọn agent có kinh nghiệm",
+    "Dùng escrow để kiểm tra và bảo vệ hai bên",
+    "Thương lượng TI và thời gian miễn tiền thuê (xây mới thường khoảng 6 tháng)",
+    "Tính trước thời gian xin giấy phép (có trục trặc có thể mất cả năm)"
+  ],
+  "🧋 Sản phẩm":[
+    "Làm tốt chất lượng tất cả các món, không chỉ món chính",
+    "Cho khách nhiều lựa chọn, theo dõi món nào bán nhiều và khách quay lại",
+    "Menu dưới 30 món: cà phê, trà, matcha mỗi loại 7–8 món, vài món ăn, 3–4 món theo mùa",
+    "Dùng chung nguyên liệu hoặc bán thành phẩm để giảm hao hụt"
+  ],
+  "🤝 Phục vụ khách":[
+    "Tuyển theo tính tình hợp với quán, không cần nhiều kinh nghiệm",
+    "Tuyển cả part-time và full-time để dễ xếp lịch",
+    "Góp ý riêng, báo liền, khen thì nêu tên",
+    "Giao việc cho nhân viên, không giấu công thức",
+    "Có hệ thống kiểm kho mỗi ngày hoặc khi giao ca",
+    "Theo dõi số liệu: doanh thu, chi phí, giá vốn từng món, doanh số theo giờ",
+    "Theo dõi tỷ lệ chi phí nhân sự trên doanh số theo giờ",
+    "Tạo không khí như ở nhà: sinh nhật mỗi tháng, thưởng cuối năm"
+  ],
+  "🎨 Thiết kế quán":[
+    "Quầy thiết kế để nước đi một chiều",
+    "Thiết kế đơn giản, đồng nhất, dễ lau chùi",
+    "Có chào khách, mùi hương, đèn vàng neutral, logo ít nhưng dễ thấy",
+    "Menu rõ, dễ đọc, món chính ở trên từ trái qua, đánh dấu Most Popular",
+    "Đủ quầy order, nước ra trong 5 phút (nhất là tiệm cà phê)",
+    "Nhân viên giải thích menu cho khách",
+    "Restroom, bàn ghế sạch và được bảo trì"
+  ]
+};
+$("#checkBody").innerHTML=Object.entries(CHECK).map(([g,items])=>`<h3>${g}</h3>`+items.map(t=>`<label><input type="checkbox"><span>${t}</span></label>`).join("")).join("");
+$("#checkBtn").onclick=()=>$("#check").showModal();
+$("#check").addEventListener("click",e=>{if(e.target.id==="check")e.target.close()});
+
 chart(); go(0);
 </script>
 </body>
