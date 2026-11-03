@@ -245,7 +245,8 @@ dialog#menu h2{font-size:1.5rem;margin-bottom:1rem}
     <div class="cards">
       <button class="card" data-path="loc"><span class="em">📍</span><h3>Vị trí</h3><span class="muted">Quyết định lớn nhất</span></button>
       <button class="card" data-path="prod"><span class="em">🧋</span><h3>Sản phẩm</h3><span class="muted">Chất lượng, gu, menu</span></button>
-      <button class="card" data-path="svc"><span class="em">🤝</span><h3>Phục vụ khách</h3><span class="muted">Sắp ra mắt</span></button>
+      <button class="card" data-path="svc"><span class="em">🤝</span><h3>Phục vụ khách</h3><span class="muted">Nhân viên, tuyển dụng, văn hoá</span></button>
+      <button class="card" data-path="design"><span class="em">🎨</span><h3>Thiết kế quán</h3><span class="muted">Quầy, điểm chạm, hành trình khách</span></button>
     </div>
   </div>
 </section>
@@ -272,8 +273,35 @@ dialog#menu h2{font-size:1.5rem;margin-bottom:1rem}
       <button class="card" aria-pressed="false" data-k="when"><span class="em">🕐</span><h3>Đi lúc nào?</h3></button>
       <button class="card" aria-pressed="false" data-k="look"><span class="em">👀</span><h3>Nhìn gì?</h3></button>
       <button class="card" aria-pressed="false" data-k="buy"><span class="em">🏪</span><h3>Định mua lại tiệm?</h3></button>
+      <button class="card" aria-pressed="false" data-k="build"><span class="em">🏗️</span><h3>Xây mới thì sao?</h3></button>
     </div>
     <div class="reveal" id="sitAns" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="loc" aria-label="Liên hệ ai? Cần gì?">
+  <div class="wrap">
+    <p class="kicker">Câu hỏi 8</p>
+    <h2>Chọn được rồi, liên hệ ai?</h2>
+    <p class="lead">Liên hệ trực tiếp chủ tiệm, hoặc agent quản lý building.</p>
+    <div class="cards" id="who">
+      <button class="card" aria-pressed="false" data-k="hard"><span class="em">🚧</span><h3>Khó nhất</h3></button>
+      <button class="card" aria-pressed="false" data-k="plan"><span class="em">📋</span><h3>Business plan</h3></button>
+      <button class="card" aria-pressed="false" data-k="money"><span class="em">💵</span><h3>Tiền</h3></button>
+    </div>
+    <div class="reveal" id="whoAns" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="loc" aria-label="Agent và escrow">
+  <div class="wrap">
+    <p class="kicker">Câu hỏi 9</p>
+    <h2>Có cần agent và escrow không?</h2>
+    <div class="seg" role="group" aria-label="Chọn" id="ae">
+      <button aria-pressed="true" data-k="agent">Agent</button>
+      <button aria-pressed="false" data-k="escrow">Escrow</button>
+    </div>
+    <div class="panel" id="aeOut" aria-live="polite"></div>
     <button class="cta" data-hub>← Chọn chủ đề khác</button>
   </div>
 </section>
@@ -361,11 +389,164 @@ dialog#menu h2{font-size:1.5rem;margin-bottom:1rem}
 </section>
 
 <!-- ===== PATH: phục vụ khách ===== -->
-<section class="slide" data-p="svc" aria-label="Phục vụ khách (sắp ra mắt)">
+<section class="slide" data-p="svc" aria-label="Phục vụ giữ chân khách">
   <div class="wrap">
-    <p class="kicker">Phục vụ khách</p>
-    <h2>Phần này đang được viết.</h2>
-    <p class="lead">Mình sẽ chia sẻ sớm. Quay lại sau nhé.</p>
+    <p class="kicker">Phục vụ · Câu hỏi 1</p>
+    <h2>Phục vụ có quan trọng không?</h2>
+    <p class="lead">Rất quan trọng để giữ chân khách, và luôn có thể đổi, làm tốt hơn.</p>
+    <div class="seg" role="group" aria-label="Chọn" id="sv">
+      <button aria-pressed="true" data-k="learn">Học ở đâu?</button>
+      <button aria-pressed="false" data-k="ops">Gắn với điều hành</button>
+    </div>
+    <div class="panel" id="svOut" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="svc" aria-label="Đối xử với nhân viên">
+  <div class="wrap">
+    <p class="kicker">Phục vụ · Câu hỏi 2</p>
+    <h2>Đối xử với nhân viên thế nào?</h2>
+    <p class="muted">Cách nhân viên phục vụ khách phản ánh cách mình quản lý họ.</p>
+    <div class="cards" id="treat">
+      <button class="card" aria-pressed="false" data-k="soft"><span class="em">🕊️</span><h3>Đừng quá khắt khe</h3></button>
+      <button class="card" aria-pressed="false" data-k="fix"><span class="em">🤫</span><h3>Góp ý thế nào?</h3></button>
+      <button class="card" aria-pressed="false" data-k="praise"><span class="em">🏆</span><h3>Khen thế nào?</h3></button>
+    </div>
+    <div class="reveal" id="treatAns" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="svc" aria-label="Tuyển ai?">
+  <div class="wrap">
+    <p class="kicker">Phục vụ · Câu hỏi 3</p>
+    <h2>Tuyển ai?</h2>
+    <div class="cards" id="hire">
+      <button class="card" aria-pressed="false" data-k="age"><span class="em">👯</span><h3>Gần tuổi nhau</h3></button>
+      <button class="card" aria-pressed="false" data-k="deg"><span class="em">🎓</span><h3>Có bằng cấp</h3></button>
+      <button class="card" aria-pressed="false" data-k="char"><span class="em">💛</span><h3>Tính tình hợp</h3></button>
+      <button class="card" aria-pressed="false" data-k="mix"><span class="em">🗓️</span><h3>Part-time và full-time</h3></button>
+    </div>
+    <div class="reveal" id="hireAns" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="svc" aria-label="Làm cho nhân viên nhẹ việc">
+  <div class="wrap">
+    <p class="kicker">Phục vụ · Câu hỏi 4</p>
+    <h2>Làm sao để nhân viên không quá tải?</h2>
+    <div class="seg" role="group" aria-label="Chọn" id="ease">
+      <button aria-pressed="true" data-k="menu">Món đơn giản</button>
+      <button aria-pressed="false" data-k="stock">Quản lý kho</button>
+    </div>
+    <div class="panel" id="easeOut" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="svc" aria-label="Giao việc và giữ người">
+  <div class="wrap">
+    <p class="kicker">Phục vụ · Câu hỏi 5</p>
+    <h2>Giao việc và giữ người ở lại</h2>
+    <div class="cards" id="keep">
+      <button class="card" aria-pressed="false" data-k="share"><span class="em">🔑</span><h3>Giao việc</h3></button>
+      <button class="card" aria-pressed="false" data-k="lead"><span class="em">🌱</span><h3>Chọn người lead</h3></button>
+      <button class="card" aria-pressed="false" data-k="home"><span class="em">🏠</span><h3>Không khí như ở nhà</h3></button>
+    </div>
+    <div class="reveal" id="keepAns" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="svc" aria-label="Quản lý bằng con số">
+  <div class="wrap">
+    <p class="kicker">Phục vụ · Câu hỏi 6</p>
+    <h2>Quản lý bằng con số</h2>
+    <p class="muted">Mình tự viết một trang web lấy được toàn bộ thông tin doanh thu và chi phí.</p>
+    <div class="cards" id="nums">
+      <button class="card" aria-pressed="false" data-k="cash"><span class="em">💰</span><h3>Dòng tiền</h3></button>
+      <button class="card" aria-pressed="false" data-k="item"><span class="em">🧾</span><h3>Từng món, từng giờ</h3></button>
+      <button class="card" aria-pressed="false" data-k="labor"><span class="em">⏱️</span><h3>Chi phí nhân sự</h3></button>
+    </div>
+    <div class="reveal" id="numsAns" aria-live="polite"></div>
+    <button class="cta" data-hub>← Chọn chủ đề khác</button>
+  </div>
+</section>
+
+
+<!-- ===== PATH: thiết kế quán ===== -->
+<section class="slide" data-p="design" aria-label="Thiết kế quầy">
+  <div class="wrap">
+    <p class="kicker">Thiết kế · Câu hỏi 1</p>
+    <h2>Quầy thiết kế sai thì sao?</h2>
+    <p class="lead">Nước ra chậm, nhân viên mệt vì phải đi lại quá nhiều.</p>
+    <div class="seg" role="group" aria-label="Chọn" id="bar2">
+      <button aria-pressed="true" data-k="one">Đi một chiều</button>
+      <button aria-pressed="false" data-k="same">Order và ra nước cùng chỗ</button>
+    </div>
+    <div class="panel" id="bar2Out" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="design" aria-label="Thiết kế quán: đơn giản, đồng nhất">
+  <div class="wrap">
+    <p class="kicker">Thiết kế · Câu hỏi 2</p>
+    <h2>Đẹp để check-in, hay đơn giản và đồng nhất?</h2>
+    <div class="seg" role="group" aria-label="Chọn" id="look">
+      <button aria-pressed="true" data-k="gram">Nhiều trang trí</button>
+      <button aria-pressed="false" data-k="plain">Đơn giản, đồng nhất</button>
+    </div>
+    <div class="panel" id="lookOut" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="design" aria-label="Điểm chạm">
+  <div class="wrap">
+    <p class="kicker">Thiết kế · Câu hỏi 3</p>
+    <h2>Mua hàng là một hành trình, không chỉ là sản phẩm.</h2>
+    <p class="muted">Các điểm chạm từ lúc khách bước vào:</p>
+    <div class="cards" id="touch">
+      <button class="card" aria-pressed="false" data-k="hi"><span class="em">👋</span><h3>Chào khách</h3></button>
+      <button class="card" aria-pressed="false" data-k="scent"><span class="em">👃</span><h3>Mùi hương</h3></button>
+      <button class="card" aria-pressed="false" data-k="light"><span class="em">💡</span><h3>Ánh sáng</h3></button>
+      <button class="card" aria-pressed="false" data-k="logo"><span class="em">🏷️</span><h3>Logo</h3></button>
+    </div>
+    <div class="reveal" id="touchAns" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="design" aria-label="Menu và gọi món">
+  <div class="wrap">
+    <p class="kicker">Thiết kế · Câu hỏi 4</p>
+    <h2>Menu và lúc gọi món</h2>
+    <div class="cards" id="ord">
+      <button class="card" aria-pressed="false" data-k="read"><span class="em">📖</span><h3>Menu dễ đọc</h3></button>
+      <button class="card" aria-pressed="false" data-k="pop"><span class="em">🔥</span><h3>Món bán chạy</h3></button>
+      <button class="card" aria-pressed="false" data-k="teach"><span class="em">🗣️</span><h3>Giải thích cho khách</h3></button>
+    </div>
+    <div class="reveal" id="ordAns" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="design" aria-label="Một quầy hay nhiều quầy order?">
+  <div class="wrap">
+    <p class="kicker">Thiết kế · Câu hỏi 5</p>
+    <h2>Một quầy order hay nhiều quầy?</h2>
+    <div class="seg" role="group" aria-label="Chọn" id="reg">
+      <button aria-pressed="true" data-k="one">Một register / kiosk</button>
+      <button aria-pressed="false" data-k="many">Nhiều quầy</button>
+    </div>
+    <div class="panel" id="regOut" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="slide" data-p="design" aria-label="Sau khi khách nhận nước">
+  <div class="wrap">
+    <p class="kicker">Thiết kế · Câu hỏi 6</p>
+    <h2>Khách nhận nước rồi thì sao?</h2>
+    <div class="cards" id="after">
+      <button class="card" aria-pressed="false" data-k="ask"><span class="em">🙋</span><h3>Hỏi thăm, xin review</h3></button>
+      <button class="card" aria-pressed="false" data-k="wc"><span class="em">🚻</span><h3>Restroom</h3></button>
+      <button class="card" aria-pressed="false" data-k="tbl"><span class="em">🪑</span><h3>Bàn ghế</h3></button>
+    </div>
+    <div class="reveal" id="afterAns" aria-live="polite"></div>
     <button class="cta" data-hub>← Chọn chủ đề khác</button>
   </div>
 </section>
@@ -403,7 +584,17 @@ const T={
   sit:{
     when:"Tới vào <b>sáng, trưa, chiều, tối</b>, cả <b>ngày thường và cuối tuần</b> để thấy từng khung giờ.",
     look:"Khách đến lúc nào đông, <b>loại khách nào</b>, họ mua sản phẩm gì. Rồi tưởng tượng: nếu mình bán món mới (ví dụ cà phê) thì khách có chịu không?",
-    buy:"Tiệm đông: chủ có thể không bán hoặc bán giá cao. Tiệm vắng, làm ăn không được: mình sẽ biết lý do và có thể hỏi mua."
+    buy:"Tiệm đông: chủ có thể không bán hoặc bán giá cao. Tiệm vắng, làm ăn không được: mình sẽ biết lý do và có thể hỏi mua.",
+    build:"Tới các quán gần đó ngồi quan sát: nếu mình mở ở đây thì mỗi ngày sẽ ra sao? Đứng ở vị trí khách thì đi vào thấy thế nào, và các quán quanh đó bán ra sao."
+  },
+  who:{
+    hard:"Khó nhất với người mở tiệm lần đầu là <b>kinh nghiệm</b>. Landlord thường đòi hỏi bạn đã có hoặc đang mở tiệm. Chưa có thì cần business plan chi tiết, và nên có người hoặc công ty tư vấn hỗ trợ.",
+    plan:"Càng <b>chi tiết</b> landlord càng thích: có thiết kế tiệm và menu cụ thể.",
+    money:"Chuẩn bị đủ tiền trong ngân hàng để landlord thấy bạn đủ sức <b>mua lại, sửa tiệm, và trả tiền thuê 6 tháng</b>."
+  },
+  ae:{
+    agent:["Agent: có hoặc không đều được","Bạn có thể làm việc trực tiếp với landlord và chủ tiệm. Nếu chọn agent thì chọn người <b>có kinh nghiệm</b> giúp mua lại, vì agent không tốt cũng có thể làm hỏng việc. Mình từng gặp agent kéo dài escrow gần 6 tháng, may là vẫn mở đúng thời gian. Dù vậy, <b>có agent vẫn tốt hơn.</b>"],
+    escrow:["Escrow: nên có","Escrow kiểm tra và bảo vệ cả bên mua lẫn bên bán, đồng thời làm việc với landlord. Ví dụ bên bán nợ thuế thì escrow sẽ điều tra và báo cho bạn. <b>Tốn thêm chút phí nhưng yên tâm hơn nhiều.</b>"]
   },
   qual:{
     yes:"<b>Chưa đủ.</b> Nhiều người nghĩ món chính ngon là được, món khác làm tạm cũng không sao. Nhưng khách rất kỹ, họ biết món nào ngon.",
@@ -428,6 +619,63 @@ const T={
     staff:"Phải nhớ nhiều công thức nên <b>dễ làm sai</b>, nhân viên mệt, hoặc cần thêm người chuẩn bị.",
     special:"Món đặc biệt (specialty) nhiều quá thì <b>thành ra không còn món nào đặc biệt</b>."
   },
+  sv:{
+    learn:["Học từ nhà hàng và tiệm sang trọng","Mỗi quán có cách phục vụ riêng. Mình có thể tham khảo các nhà hàng, tiệm cao cấp rồi áp dụng. Phần này <b>đổi và cải thiện được</b> bất cứ lúc nào."],
+    ops:["Cách phục vụ phản ánh cách điều hành","Văn hoá của quán hình thành từ cách mình điều hành và huấn luyện nhân viên. Vì vậy mình gộp phần <b>điều hành</b> vào phần phục vụ."]
+  },
+  treat:{
+    soft:"Nếu chủ khó khăn, quát tháo, <b>micro-management</b> thì nhân viên luôn bị áp lực và sẽ không phục vụ khách tốt. Chủ không nên quá khắc khe.",
+    fix:"Thấy sai thì <b>báo liền</b>, đừng để lâu. Góp ý <b>riêng</b>, không la trước mặt nhiều người. Hoặc nhắn chung cho cả nhóm, không chỉ đích danh.",
+    praise:"Khi thưởng hoặc khen thì <b>nêu tên từng người</b>."
+  },
+  hire:{
+    age:"Tuyển nhân viên <b>gần tuổi nhau</b> để dễ kết nối. Ở tiệm mình, nhân viên đi chơi chung và thành bạn thân luôn.",
+    deg:"Người <b>có bằng cấp</b> thường dễ truyền đạt và hiểu vấn đề nhanh hơn.",
+    char:"Tuyển theo <b>tính tình hợp với quán</b>, không cần người giỏi nhiều kinh nghiệm. Không biết thì dạy được, nhưng nhiều kinh nghiệm có thể sẽ không chịu nghe. Tìm người phù hợp, lanh lẹ.",
+    mix:"Đừng chỉ tuyển sinh viên: họ không làm lâu và giờ bị động theo lịch học. Cũng đừng chỉ tuyển người cần full-time: khó điều chỉnh khi tiệm vắng. <b>Thường mình tuyển cả hai</b> để dễ xếp lịch."
+  },
+  ease:{
+    menu:["Menu và món đơn giản","Món dễ làm thì nhân viên làm nhanh, dễ nhớ, ít bị quá tải. Quá nhiều món thì lúc tiệm đông là <b>lo không nổi</b>."],
+    stock:["Hệ thống quản lý kho","Nhân viên kiểm kho <b>mỗi ngày hoặc khi giao ca</b>. Giúp tránh mất đồ và hao hụt."]
+  },
+  keep:{
+    share:"Nhiều chủ sợ lộ công thức nên tự làm hết, và lúc nào cũng phải ở tiệm. Mình thì <b>giao cho nhân viên</b>, không giấu công thức vì công thức đầy trên mạng. Giao luôn việc marketing, trả lời bài đăng mạng xã hội, phỏng vấn người mới.",
+    lead:"Mình <b>không tuyển lead ngay</b>. Trong quá trình làm, thấy ai giỏi thì cho lên làm.",
+    home:"Tạo không khí <b>như ở nhà</b>: tổ chức sinh nhật mỗi tháng, mua đồ ăn, cuối năm thưởng chút cho vui. Nhân viên thấy đây là nơi làm lâu dài và ít dám làm sai vì sợ mất chỗ làm tốt."
+  },
+  nums:{
+    cash:"Biết rõ <b>thu bao nhiêu, chi bao nhiêu, giá vốn mỗi món</b> là bao nhiêu. Từ đó quản lý dòng tiền tốt hơn.",
+    item:"Theo dõi <b>discount và doanh số từng món, từng giờ bán</b> để biết món nào phù hợp với nhóm khách nào.",
+    labor:"Mình dựa vào <b>tỷ lệ chi phí nhân sự trên doanh số</b> để biết nhân sự tốn bao nhiêu theo từng giờ. Ví dụ buổi sáng chưa mở, doanh số bằng 0 nên tỷ lệ cao. Lúc mới mở vẫn vắng. Đến trưa dân văn phòng và khách tới đông, tỷ lệ giảm, nhìn vào đó mình thêm nhân viên. Mình cũng tính khi nào nhân viên sẽ <b>quá tải</b> để ra phụ hoặc gọi thêm người."
+  },
+  bar2:{
+    one:["Nước đi theo một chiều","Lấy order, qua làm nước, thêm bột và topping, rồi ra nước cho khách. Đi một chiều thì <b>nước ra nhanh, nhân viên đỡ mệt</b>."],
+    same:["Order và ra nước cùng một chỗ","Một số quầy làm vậy khiến nhân viên <b>phải đi nguyên vòng</b>. Cách này thường chỉ hợp với <b>quầy nhỏ</b>."]
+  },
+  look:{
+    gram:["Nhiều loại bàn ghế, trang trí","Có thể tốt cho check-in trên Facebook, Instagram, nhưng <b>rối mắt, thiếu đồng nhất, khó bảo dưỡng</b>."],
+    plain:["Đơn giản và đồng nhất","Nên chú trọng sự <b>đơn giản, đồng nhất</b>. Tránh thiết kế làm khó lau chùi, ví dụ nhiều hoạ tiết trang trí."]
+  },
+  touch:{
+    hi:"Khách vừa vào là phải <b>chào (welcome in)</b>.",
+    scent:"Tiệm trà thì có <b>mùi trà</b>, tiệm cà phê thì thơm <b>mùi cà phê</b>.",
+    light:"Đèn <b>vàng</b>, màu <b>neutral</b> dễ tạo cảm tình.",
+    logo:"Đặt logo và thương hiệu ở chỗ <b>dễ thấy, nhưng ít thôi</b>. Nhìn đâu cũng thấy logo thì thương hiệu bị quá tải."
+  },
+  ord:{
+    read:"Menu phải <b>rõ và dễ đọc</b>. Món chính để <b>ở trên, từ trái qua</b>, vì mình đọc từ trái qua.",
+    pop:"Món muốn bán chạy hơn thì <b>nhấn mạnh</b>, ví dụ ghi <b>Most Popular</b> để khách biết.",
+    teach:"Nhân viên lấy order thì <b>giải thích rõ cho khách</b>. Giáo dục khách rất quan trọng: chỉ cần mua sai món, khách có thể không quay lại."
+  },
+  reg:{
+    one:["Một register hoặc kiosk","Tạo <b>hiệu ứng đám đông (social proof)</b>: người ta có khuynh hướng vào quán đông hơn quán vắng."],
+    many:["Tiệm cà phê nên có nhiều quầy","Người đi làm cần nhanh để về làm, nghỉ trưa chỉ 30 phút. Họ có thể <b>đợi order</b>, nhưng <b>nước phải ra trong 5 phút</b>, lâu hơn họ sẽ không chịu."]
+  },
+  after:{
+    ask:"Nhân viên ra nước thì <b>hỏi khách có cần gì không</b> và xin review.",
+    wc:"Chú ý <b>restroom</b>. Không sạch thì khách sẽ nghĩ cả quán cũ và không sạch.",
+    tbl:"Kiểm tra <b>bàn ghế có sạch</b> không và có được <b>bảo trì</b> không. Không thì khách sẽ nghĩ quán cũ, không sạch."
+  },
   hours:[6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
   seg:{ // traffic 0-100 per hour
     stu:[10,90,35,5,5,5,15,15,10,70,100,40,15,10,5,5],
@@ -443,7 +691,7 @@ const T={
 
 /* ---- slides ---- */
 const slides=$$(".slide"), bar=$("#bar i"), prev=$("#prev"), next=$("#next"), dots=$("#dots"), home=$("#homeBtn");
-const NAMES={intro:"Mở đầu",loc:"📍 Vị trí",prod:"🧋 Sản phẩm",svc:"🤝 Phục vụ khách"};
+const NAMES={intro:"Mở đầu",loc:"📍 Vị trí",prod:"🧋 Sản phẩm",svc:"🤝 Phục vụ khách",design:"🎨 Thiết kế quán"};
 const pathOf=i=>slides[i].dataset.p, inPath=p=>slides.map((_,i)=>i).filter(i=>pathOf(i)===p);
 const hubIdx=slides.findIndex(s=>s.id==="hub");
 let cur=0;
@@ -493,7 +741,7 @@ function cards(id,out,map){
   });
 }
 cards("pick","pickAns",T.pick); cards("more","moreAns",T.more);
-cards("sit","sitAns",T.sit); cards("qual","qualAns",T.qual); cards("taste","tasteAns",T.taste); cards("probs","probsAns",T.probs);
+cards("sit","sitAns",T.sit); cards("touch","touchAns",T.touch); cards("ord","ordAns",T.ord); cards("after","afterAns",T.after); cards("nums","numsAns",T.nums); cards("treat","treatAns",T.treat); cards("hire","hireAns",T.hire); cards("keep","keepAns",T.keep); cards("who","whoAns",T.who); cards("qual","qualAns",T.qual); cards("taste","tasteAns",T.taste); cards("probs","probsAns",T.probs);
 
 /* ---- segmented toggles ---- */
 function seg(id,out,map){
@@ -504,7 +752,7 @@ function seg(id,out,map){
   });
   draw($("[aria-pressed=true]",$("#"+id)).dataset.k);
 }
-seg("cmp","cmpOut",T.cmp); seg("bb","bbOut",T.bb); seg("gu","guOut",T.gu); seg("menuCmp","menuCmpOut",T.menuCmp);
+seg("cmp","cmpOut",T.cmp); seg("bb","bbOut",T.bb); seg("gu","guOut",T.gu); seg("bar2","bar2Out",T.bar2); seg("look","lookOut",T.look); seg("reg","regOut",T.reg); seg("sv","svOut",T.sv); seg("ease","easeOut",T.ease); seg("ae","aeOut",T.ae); seg("menuCmp","menuCmpOut",T.menuCmp);
 
 /* ---- hours chart ---- */
 const cols=$("#cols"), on=new Set();
