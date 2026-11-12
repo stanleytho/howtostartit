@@ -40,6 +40,7 @@ p.lead{color:var(--crema);max-width:44ch;font-size:1.1em}
 .muted{color:var(--latte);font-size:.9rem}
 .cta{justify-self:start;background:var(--accent);color:var(--espresso);font-weight:600;padding:.9rem 1.8rem;border-radius:99px;transition:transform .25s var(--ease)}
 .cta:hover{transform:translateY(-2px)}
+a.cta{display:inline-block;text-decoration:none}
 .cover{background:radial-gradient(60rem 40rem at 85% 10%,var(--mocha),transparent 60%),var(--espresso)}
 .cover .cup{position:absolute;right:clamp(1rem,8vw,8rem);bottom:18%;font-size:clamp(6rem,18vw,15rem);opacity:.9;line-height:1;pointer-events:none}
 @media(max-width:700px){.cover .cup{opacity:.18}}
@@ -275,6 +276,7 @@ dialog#check::backdrop{background:rgba(0,0,0,.6)}
       <button class="card" data-path="prod"><span class="em">🧋</span><h3>Sản phẩm</h3><span class="muted">Chất lượng, gu, menu</span></button>
       <button class="card" data-path="svc"><span class="em">🤝</span><h3>Phục vụ khách</h3><span class="muted">Nhân viên, tuyển dụng, văn hoá</span></button>
       <button class="card" data-path="design"><span class="em">🎨</span><h3>Thiết kế quán</h3><span class="muted">Quầy, điểm chạm, hành trình khách</span></button>
+      <button class="card" data-path="tools"><span class="em">🧰</span><h3>Công cụ miễn phí</h3><span class="muted">Quản lý kho, tính giá bán</span></button>
     </div>
   </div>
 </section>
@@ -494,6 +496,7 @@ dialog#check::backdrop{background:rgba(0,0,0,.6)}
       <button class="card" aria-pressed="false" data-k="labor"><span class="em">⏱️</span><h3>Chi phí nhân sự</h3></button>
     </div>
     <div class="reveal" id="numsAns" aria-live="polite"></div>
+    <a class="cta" data-track="so" target="_blank" rel="noopener" href="https://inventoryaas.com/?utm_source=howtostartit&utm_medium=site&utm_campaign=so">Xem công cụ của mình →</a>
     <button class="cta" data-hub>← Chọn chủ đề khác</button>
   </div>
 </section>
@@ -579,6 +582,28 @@ dialog#check::backdrop{background:rgba(0,0,0,.6)}
   </div>
 </section>
 
+<!-- ===== PATH: công cụ ===== -->
+<section class="slide" data-p="tools" aria-label="Quản lý kho">
+  <div class="wrap">
+    <p class="kicker">Công cụ · 1</p>
+    <h2>Kho: còn bao nhiêu, sắp hết hạn món nào?</h2>
+    <p class="lead">Cần biết còn bao nhiêu, món nào sắp hết hạn, dùng bao nhiêu mỗi ngày. <b>Đừng mua quá nhiều nếu chưa cần.</b></p>
+    <p class="muted">Mình tự viết trang web này để quản lý tiệm của mình. Bạn mở tài khoản và dùng thử.</p>
+    <a class="cta" data-track="kho" target="_blank" rel="noopener" href="https://inventoryaas.com/?utm_source=howtostartit&utm_medium=site&utm_campaign=kho">Dùng thử quản lý kho →</a>
+  </div>
+</section>
+
+<section class="slide" data-p="tools" aria-label="Tính giá bán">
+  <div class="wrap">
+    <p class="kicker">Công cụ · 2</p>
+    <h2>Định giá bán thế nào?</h2>
+    <p class="lead">Đừng chỉ nhìn giá quanh đó. <b>Tham khảo giá 4–5 tiệm gần nhất</b>, rồi tính từ chi phí cố định (tiền thuê...) và giá vốn từng món.</p>
+    <p class="muted">Mình cũng có trang web tính giá, bạn có thể dùng.</p>
+    <a class="cta" data-track="gia" target="_blank" rel="noopener" href="https://inventoryaas.com/?utm_source=howtostartit&utm_medium=site&utm_campaign=gia">Dùng thử tính giá →</a>
+    <button class="cta" data-hub>← Chọn chủ đề khác</button>
+  </div>
+</section>
+
 </main>
 
 <nav class="ctl" aria-label="Điều hướng">
@@ -588,6 +613,10 @@ dialog#check::backdrop{background:rgba(0,0,0,.6)}
 </nav>
 
 <script>
+/* ---- analytics: GoatCounter (free). Sign up at goatcounter.com, put your site code here. Empty = off. ---- */
+const GC="";
+if(GC){const g=document.createElement("script");g.async=true;g.src="//gc.zgo.at/count.js";g.dataset.goatcounter=`https://${GC}.goatcounter.com/count`;document.head.append(g)}
+const hit=(path,title)=>window.goatcounter&&goatcounter.count&&goatcounter.count({path,title,event:true});
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 
 /* ---- content (edit here; swap for EN later) ---- */
@@ -719,7 +748,7 @@ const T={
 
 /* ---- slides ---- */
 const slides=$$(".slide"), bar=$("#bar i"), prev=$("#prev"), next=$("#next"), dots=$("#dots"), home=$("#homeBtn");
-const NAMES={intro:"Mở đầu",loc:"📍 Vị trí",prod:"🧋 Sản phẩm",svc:"🤝 Phục vụ khách",design:"🎨 Thiết kế quán"};
+const NAMES={intro:"Mở đầu",loc:"📍 Vị trí",prod:"🧋 Sản phẩm",svc:"🤝 Phục vụ khách",design:"🎨 Thiết kế quán",tools:"🧰 Công cụ"};
 const pathOf=i=>slides[i].dataset.p, inPath=p=>slides.map((_,i)=>i).filter(i=>pathOf(i)===p);
 const hubIdx=slides.findIndex(s=>s.id==="hub");
 let cur=0;
@@ -752,7 +781,8 @@ prev.onclick=()=>step(-1); next.onclick=()=>step(1);
 document.addEventListener("click",e=>{
   if(e.target.closest("[data-next]"))step(1);
   if(e.target.closest("[data-hub]"))go(hubIdx);
-  const p=e.target.closest("[data-path]"); if(p)go(inPath(p.dataset.path)[0]);
+  const p=e.target.closest("[data-path]"); if(p){hit("path/"+p.dataset.path,"open path");go(inPath(p.dataset.path)[0])}
+  const t=e.target.closest("[data-track]"); if(t)hit("click/"+t.dataset.track,"tool link");
 });
 addEventListener("keydown",e=>{
   if(menu.open||$("#check").open)return;
